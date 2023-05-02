@@ -3,9 +3,10 @@ package org.example.controller;
 import org.example.entity.StatusEmployee;
 import org.example.repository.StatusEmployeeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
 @RestController
 @RequestMapping("/api/v1")
@@ -15,9 +16,12 @@ public class StatusEmployeeController {
     private StatusEmployeeRepository statusEmployeeRepository;
 
     @GetMapping(path = "/getstatus")
-    public ResponseEntity getAllStatus(){
+    public ModelAndView getAllStatus(){
         var listStatus = statusEmployeeRepository.findAll();
-        return ResponseEntity.ok().body(listStatus);
+        ModelAndView view = new ModelAndView();
+        view.setViewName("status.html");
+        view.addObject("listStatus",listStatus);
+        return view;
     }
 
     @GetMapping(path = "/getstatus", params = {"id"})
