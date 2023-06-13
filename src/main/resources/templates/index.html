@@ -1,12 +1,12 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
 </head>
-<body>/api/v1/getstatus
-<form action="<c:url value="/api/v1/getstatus" />" method="GET">
-    <input type="submit" name="action" value="save" />
+<body>
+<form action="/api/v1/getstatus" method="GET">
+    <input type="submit" value="get status"/>
 </form>
 </body>
 </html>
