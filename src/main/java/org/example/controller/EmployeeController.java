@@ -1,6 +1,7 @@
 package org.example.controller;
 
 import org.example.entity.Employee;
+import org.example.entity.StatusEmployee;
 import org.example.repository.EmployeeRepository;
 import org.example.repository.StatusEmployeeRepository;
 import org.springframework.beans.BeanUtils;
@@ -22,24 +23,44 @@ public class EmployeeController {
     private StatusEmployeeRepository statusEmployeeRepository;
 
     @GetMapping("/employees")
-    public ResponseEntity getAllEmployees(){
+    public ResponseEntity getAllEmployees() {
         return ResponseEntity.ok().body(employeeRepository.findAll());
     }
 
-    @PostMapping(path = "/employees", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity createEmployee(@ModelAttribute Employee employee) {
+    @PostMapping(path = "/employees")
+    public ModelAndView createEmployee(@ModelAttribute Employee employee) {
         employeeRepository.save(employee);
-        return ResponseEntity.ok().body("add");
+        List<Employee> employees = employeeRepository.findAll();
+        List<StatusEmployee> statusEmployees = statusEmployeeRepository.findAll();
+        ModelAndView view = new ModelAndView();
+        view.addObject("employee", new Employee());
+        view.setViewName("employees.html");
+        view.addObject("employees", employees);
+        view.addObject("statuses",statusEmployees);
+        return view;
+    }
+
+    @PostMapping(path = "/delete_employee")
+    public ModelAndView deleteEmployee(@ModelAttribute Employee employee){
+        employeeRepository.deleteById(employee.getId());
+        List<Employee> employees = employeeRepository.findAll();
+        ModelAndView view = new ModelAndView();
+        view.addObject("employee", new Employee());
+        view.setViewName("employees.html");
+        view.addObject("employees", employees);
+        return view;
     }
 
     @GetMapping(path = "/employees_page")
-    public ModelAndView getEmployeesPage(){
+    public ModelAndView getEmployeesPage() {
 
         List<Employee> employees = employeeRepository.findAll();
+        List<StatusEmployee> statusEmployees = statusEmployeeRepository.findAll();
         ModelAndView view = new ModelAndView();
-        view.addObject("employee",new Employee());
+        view.addObject("employee", new Employee());
         view.setViewName("employees.html");
-        view.addObject("employees",employees);
-        return  view;
+        view.addObject("employees", employees);
+        view.addObject("statuses",statusEmployees);
+        return view;
     }
 }
