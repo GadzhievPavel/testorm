@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <!--    <link rel="stylesheet" type="text/css" media="all" data-th-href="@{/style/style.css}" href="../../style/style.css">-->
+    <style th:inline="css">
+        .editorUser{
+            background-color: grey;
+            position:absolute;
+            right:0px;
+            width:30%;
+        }
+        h1{
+        width:100%
+        background:grey;
+        text-color:white;
+        text-align:center;
+        }
+    </style>
+</head>
+<body>
+<div>
+    <h1>Редактирование пользователя</h1>
+</div>
+<div class="editorUser">
+    <form th:action="@{/api/employees}" th:object="${employee}" method="post">
+        <table>
+            <tr>
+                <td>
+                    <p>Name</p>
+                </td>
+                <td>
+                    <input type="text" th:field="*{firstName}"/>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <p>LastName</p>
+                </td>
+                <td>
+                    <input type="text" th:field="*{lastName}"/>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <p>E-mail</p>
+                </td>
+                <td>
+                    <input type="text" th:field="*{emailId}">
+                </td>
+            </tr>
+            <tr>
+                <td>Status</td>
+                <td>
+                    <select th:field="*{status}">
+                        <option th:each="status1:${statuses}" th:text="${status1.name}" th:value="${status1.id}"/>
+                    </select>
+                </td>
+            </tr>
+        </table>
+        <input type="submit" value="Update"/>
+    </form>
+</div>
+<form>
+    <a href="/">Back</a>
+</form>
+</body>
+</html>

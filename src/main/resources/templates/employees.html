@@ -3,24 +3,112 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <!--    <link rel="stylesheet" type="text/css" media="all" data-th-href="@{/style/style.css}" href="../../style/style.css">-->
+    <style th:inline="css">
+        .editorUser{
+            background-color: grey;
+            position:absolute;
+            right:0px;
+            width:30%;
+        }
+        h1{
+        width:100%
+        background:grey;
+        text-color:white;
+        text-align:center;
+        }
+
+        .scroll-table-body {
+	        height: 500px;
+	        overflow-x: auto;
+	        margin-top: 0px;
+	        margin-bottom: 20px;
+	        border-bottom: 1px solid #eee;
+
+        }
+        .scroll-table table {
+	        table-layout: fixed;
+	        border: none;
+	        width:70%;
+        }
+        .scroll-table thead tr {
+	        font-weight: bold;
+	        text-align: left;
+	        border: none;
+	        padding: 10px 15px;
+	        background: #d8d8d8;
+	        font-size: 14px;
+	        border-left: 1px solid #ddd;
+	        border-right: 1px solid #ddd;
+	        width:70%;
+        }
+        .scroll-table tbody td {
+	        text-align: left;
+	        border-left: 1px solid #ddd;
+	        border-right: 1px solid #ddd;
+	        padding: 10px 15px;
+	        font-size: 14px;
+	        vertical-align: top;
+	         width:70%;
+        }
+        .scroll-table tbody tr:nth-child(even){
+	        background: #f3f3f3;
+	         width:70%;
+        }
+
+        ::-webkit-scrollbar {
+	        width: 6px;
+	         width:70%;
+        }
+        ::-webkit-scrollbar-track {
+	        box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+	         width:70%;
+        }
+        ::-webkit-scrollbar-thumb {
+	        box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+	         width:70%;
+        }
+
+
+
+    </style>
 </head>
 <body>
 <div>
     <h1>Пользователи</h1>
 </div>
-<div>
+<div class="editorUser">
     <form th:action="@{/api/employees}" th:object="${employee}" method="post">
         <table>
             <tr>
                 <td>
-                    <p>Name: <input type="text" th:field="*{firstName}" /></p>
-                    <p>LastName: <input type="text" th:field="*{lastName}" /></p>
+                    <p>Name</p>
                 </td>
                 <td>
-                    <p>E-mail: <input type="text" th:field="*{emailId}"></p>
-<!--                    <p>Status: <input type="text" th:field="*{status}"></p>-->
+                    <input type="text" th:field="*{firstName}"/>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <p>LastName</p>
+                </td>
+                <td>
+                    <input type="text" th:field="*{lastName}"/>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <p>E-mail</p>
+                </td>
+                <td>
+                    <input type="text" th:field="*{emailId}">
+                </td>
+            </tr>
+            <tr>
+                <td>Status</td>
+                <td>
                     <select th:field="*{status}">
-                        <option th:each="status1:${statuses}" th:text="${status1.name}" th:value="${status1.id}" />
+                        <option th:each="status1:${statuses}" th:text="${status1.name}" th:value="${status1.id}"/>
                     </select>
                 </td>
             </tr>
@@ -28,30 +116,51 @@
         <input type="submit" value="Create"/>
     </form>
 </div>
-<table border="1">
-    <tr>
-        <td>First Name</td>
-        <td>Last Name</td>
-        <td>E-mail</td>
-        <td>Status</td>
-    </tr>
-    <tr th:each="employee : ${employees}">
-        <td th:text="${employee.firstName}"></td>
-        <td th:text="${employee.lastName}"></td>
-        <td th:text="${employee.emailId}"></td>
-        <td th:text="${employee.status.name}"></td>
-        <td>
-            <form th:action="@{/api/delete_employee}" th:object="${employee}" method="post">
-                <input type="hidden" name="id" th:value="${employee.id}">
-                <input type="hidden" name="firstName" th:value="${employee.firstName}">
-                <input type="hidden" name="lastName" th:value="${employee.lastName}">
-                <input type="hidden" name="emailId" th:value="${employee.emailId}">
-<!--                <input type="hidden" name="status" th:value="${employee.status.name}">-->
-                <button>DELETE</button>
-            </form>
-        </td>
-    </tr>
-</table>
+<div class="scroll-table">
+    <table>
+        <thead>
+        <tr>
+            <td>First Name</td>
+            <td>Last Name</td>
+            <td>E-mail</td>
+            <td>Status</td>
+            <td>Delete user</td>
+            <td>Edit user</td>
+        </tr>
+        </thead>
+    </table>
+    <div class="scroll-table-body">
+        <table>
+            <tbody>
+            <tr th:each="employee : ${employees}">
+                <td th:text="${employee.firstName}"></td>
+                <td th:text="${employee.lastName}"></td>
+                <td th:text="${employee.emailId}"></td>
+                <td th:text="${employee.status.name}"></td>
+                <td>
+                    <form th:action="@{/api/delete_employee}" th:object="${employee}" method="post">
+                        <input type="hidden" name="id" th:value="${employee.id}">
+                        <input type="hidden" name="firstName" th:value="${employee.firstName}">
+                        <input type="hidden" name="lastName" th:value="${employee.lastName}">
+                        <input type="hidden" name="emailId" th:value="${employee.emailId}">
+                        <button class="buttonUsers">DELETE</button>
+                    </form>
+                </td>
+                <td>
+                    <form th:action="@{/api/employees_editor_page}" th:object="${employee}" method="get">
+                        <input type="hidden" name="id" th:value="${employee.id}">
+                        <input type="hidden" name="firstName" th:value="${employee.firstName}">
+                        <input type="hidden" name="lastName" th:value="${employee.lastName}">
+                        <input type="hidden" name="emailId" th:value="${employee.emailId}">
+                        <input type="hidden" name="status" th:value="${employee.status}" th:field="${employee.status}">
+                        <button class="buttonUsers">EDIT</button>
+                    </form>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
 <form>
     <a href="/">Back</a>
 </form>

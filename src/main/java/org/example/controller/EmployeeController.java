@@ -1,18 +1,18 @@
 package org.example.controller;
 
+import org.apache.commons.logging.Log;
 import org.example.entity.Employee;
 import org.example.entity.StatusEmployee;
 import org.example.repository.EmployeeRepository;
 import org.example.repository.StatusEmployeeRepository;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.List;
+import java.util.Optional;
+import java.util.logging.Logger;
 
 @RestController
 @RequestMapping("/api")
@@ -30,37 +30,42 @@ public class EmployeeController {
     @PostMapping(path = "/employees")
     public ModelAndView createEmployee(@ModelAttribute Employee employee) {
         employeeRepository.save(employee);
-        List<Employee> employees = employeeRepository.findAll();
-        List<StatusEmployee> statusEmployees = statusEmployeeRepository.findAll();
-        ModelAndView view = new ModelAndView();
-        view.addObject("employee", new Employee());
-        view.setViewName("employees.html");
-        view.addObject("employees", employees);
-        view.addObject("statuses",statusEmployees);
+        ModelAndView view = getPageUsers();
         return view;
     }
 
     @PostMapping(path = "/delete_employee")
-    public ModelAndView deleteEmployee(@ModelAttribute Employee employee){
+    public ModelAndView deleteEmployee(@ModelAttribute Employee employee) {
         employeeRepository.deleteById(employee.getId());
-        List<Employee> employees = employeeRepository.findAll();
-        ModelAndView view = new ModelAndView();
-        view.addObject("employee", new Employee());
-        view.setViewName("employees.html");
-        view.addObject("employees", employees);
+        ModelAndView view = getPageUsers();
         return view;
     }
 
     @GetMapping(path = "/employees_page")
     public ModelAndView getEmployeesPage() {
+        ModelAndView view = getPageUsers();
+        return view;
+    }
 
+    @GetMapping(path = "employees_editor_page")
+    public ModelAndView getEmployeesEditorPage(@ModelAttribute Employee employee){
+        System.out.println(employee.toString());
+        //Optional<Employee> employeeOptional = employeeRepository.findById(Long.valueOf(employeeId));
+        //Employee employee = employeeOptional.get();
+        ModelAndView view = new ModelAndView();
+        view.setViewName("edit_employees.html");
+        //view.addObject("employee", employee);
+        return view;
+    }
+
+    private ModelAndView getPageUsers() {
+        ModelAndView view = new ModelAndView();
         List<Employee> employees = employeeRepository.findAll();
         List<StatusEmployee> statusEmployees = statusEmployeeRepository.findAll();
-        ModelAndView view = new ModelAndView();
         view.addObject("employee", new Employee());
         view.setViewName("employees.html");
         view.addObject("employees", employees);
-        view.addObject("statuses",statusEmployees);
+        view.addObject("statuses", statusEmployees);
         return view;
     }
 }
