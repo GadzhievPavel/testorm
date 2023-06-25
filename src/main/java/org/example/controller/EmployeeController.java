@@ -49,13 +49,23 @@ public class EmployeeController {
 
     @GetMapping(path = "employees_editor_page")
     public ModelAndView getEmployeesEditorPage(@ModelAttribute Employee employee){
+        List<StatusEmployee> statusEmployees = statusEmployeeRepository.findAll();
+        employee = employeeRepository.findById(employee.getId()).get();
         System.out.println(employee.toString());
         //Optional<Employee> employeeOptional = employeeRepository.findById(Long.valueOf(employeeId));
         //Employee employee = employeeOptional.get();
         ModelAndView view = new ModelAndView();
         view.setViewName("edit_employees.html");
+        view.addObject("statuses", statusEmployees);
+        view.addObject("selectStatus",employee.getStatus());
         //view.addObject("employee", employee);
         return view;
+    }
+    @PostMapping(path = "update_employee")
+    public ModelAndView updateEmployee(@ModelAttribute Employee employee){
+        employeeRepository.save(employee);
+        ModelAndView modelAndView = getPageUsers();
+        return modelAndView;
     }
 
     private ModelAndView getPageUsers() {

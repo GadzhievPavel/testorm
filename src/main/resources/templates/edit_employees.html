@@ -24,7 +24,7 @@
     <h1>Редактирование пользователя</h1>
 </div>
 <div class="editorUser">
-    <form th:action="@{/api/employees}" th:object="${employee}" method="post">
+    <form th:action="@{/api/update_employee}" th:object="${employee}" method="post">
         <table>
             <tr>
                 <td>
@@ -53,8 +53,9 @@
             <tr>
                 <td>Status</td>
                 <td>
-                    <select th:field="*{status}">
-                        <option th:each="status1:${statuses}" th:text="${status1.name}" th:value="${status1.id}"/>
+                    <select th:name="${selectStatus}" >
+                        <option th:each="status1:${statuses}" th:field="*{status}" th:text="${status1.name}" th:value="${status1.id}"
+                                th:selected="${status1.id == selectStatus.id}"/>
                     </select>
                 </td>
             </tr>
