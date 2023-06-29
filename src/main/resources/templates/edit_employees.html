@@ -26,6 +26,7 @@
 <div class="editorUser">
     <form th:action="@{/api/update_employee}" th:object="${employee}" method="post">
         <table>
+            <input type="hidden" th:field="*{id}"/>
             <tr>
                 <td>
                     <p>Name</p>
@@ -53,9 +54,8 @@
             <tr>
                 <td>Status</td>
                 <td>
-                    <select th:name="${selectStatus}" >
-                        <option th:each="status1:${statuses}" th:field="*{status}" th:text="${status1.name}" th:value="${status1.id}"
-                                th:selected="${status1.id == selectStatus.id}"/>
+                    <select id="status" name="status" th:with="status=*{status}">
+                        <option th:each="st:${statuses}" th:value="${st.id}" th:text="${st.name}" th:selected="${st.id}==${sel.id}"/>
                     </select>
                 </td>
             </tr>

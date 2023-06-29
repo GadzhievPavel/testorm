@@ -13,16 +13,16 @@ public class StatusEmployee {
     @Column(name = "name")
     private String name;
 
-    public StatusEmployee(String name){
+    public StatusEmployee(String name) {
         this.name = name;
     }
 
-    public StatusEmployee(int id){
+    public StatusEmployee(long id) {
         this.id = id;
     }
 
-    public StatusEmployee(){
-        this.name="";
+    public StatusEmployee() {
+        this.name = "";
     }
 
     public String getName() {
@@ -37,6 +37,10 @@ public class StatusEmployee {
         return id;
     }
 
+    public void setId(long id) {
+        this.id = id;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -48,12 +52,6 @@ public class StatusEmployee {
         return name.equals(that.name);
     }
 
-    @Override
-    public int hashCode() {
-        int result = (int) (id ^ (id >>> 32));
-        result = 31 * result + name.hashCode();
-        return result;
-    }
 
     @Override
     public String toString() {

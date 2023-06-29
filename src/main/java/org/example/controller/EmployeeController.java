@@ -52,18 +52,20 @@ public class EmployeeController {
         List<StatusEmployee> statusEmployees = statusEmployeeRepository.findAll();
         employee = employeeRepository.findById(employee.getId()).get();
         System.out.println(employee.toString());
-        //Optional<Employee> employeeOptional = employeeRepository.findById(Long.valueOf(employeeId));
-        //Employee employee = employeeOptional.get();
         ModelAndView view = new ModelAndView();
         view.setViewName("edit_employees.html");
         view.addObject("statuses", statusEmployees);
-        view.addObject("selectStatus",employee.getStatus());
-        //view.addObject("employee", employee);
+        view.addObject("sel",employee.getStatus());
         return view;
     }
     @PostMapping(path = "update_employee")
     public ModelAndView updateEmployee(@ModelAttribute Employee employee){
-        employeeRepository.save(employee);
+        System.out.println(employee);
+        Employee employeeUpdate = employeeRepository.findById(employee.getId()).get();
+        employeeUpdate.setEmailId(employee.getEmailId());
+        employeeUpdate.setFirstName(employee.getFirstName());
+        employeeUpdate.setLastName(employee.getLastName());
+        employeeUpdate.setStatus(employee.getStatus());
         ModelAndView modelAndView = getPageUsers();
         return modelAndView;
     }
