@@ -1,4 +1,4 @@
-package org.example.controller;
+package org.example.controller.api;
 
 import org.example.entity.StatusEmployee;
 import org.example.repository.StatusEmployeeRepository;

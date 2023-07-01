@@ -1,18 +1,48 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8" />
+    <meta charset="UTF-8"/>
     <title>Welcome</title>
-    <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}"/>
+    <link rel="stylesheet" type="text/css"/>
 </head>
 <body>
+<div>
+    <form th:action="@{/pages/create_status}" th:object="${statusEmployee}" method="post">
+        <table>
+            <tr>
+                <td>
+                    <p>Название статуса</p>
+                </td>
+                <td>
+                    <input type="text" th:field="*{name}"/>
+                </td>
+            </tr>
+        </table>
+        <input type="submit" value="Create">
+    </form>
+</div>
+
 <table border="1">
-<tr>
-    <th>Статусы</th>
-</tr>
-<tr th:each="status : ${listStatus}">
-    <td th:text="${status.name}"></td>
-</tr>
+    <tr>
+        <th>Статусы</th>
+    </tr>
+    <tr th:each="status : ${listStatus}">
+        <td th:text="${status.name}"></td>
+        <td>
+            <form th:action="@{/pages/delete_status}" th:object="${statusEmployee}" method="post">
+                <input type="hidden" name="id" th:value="${status.id}"/>
+                <input type="hidden" name="name" th:value="${status.name}"/>
+                <input type="submit" value="delete"/>
+            </form>
+        </td>
+        <td>
+            <form th:action="@{/pages/get_edit_pages}" th:object="${statusEmployee}" method="get">
+                <input type="hidden" name="id" th:value="${status.id}"/>
+                <input type="hidden" name="name" th:value="${status.name}"/>
+                <input type="submit" value="edit"/>
+            </form>
+        </td>
+    </tr>
 </table>
 <!--
 

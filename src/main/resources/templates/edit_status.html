@@ -1,0 +1,28 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Welcome</title>
+    <link rel="stylesheet" type="text/css"/>
+</head>
+<body>
+
+<div>
+    <form th:action="@{/pages/update_status}" th:object="${statusEmployee}" method="post">
+        <table>
+            <tr>
+                <td>
+                    <p>Название статуса</p>
+                </td>
+                <td>
+                    <input type="hidden" th:field="*{id}">
+                    <input type="text" th:field="*{name}"/>
+                </td>
+            </tr>
+        </table>
+        <input type="submit" value="Update">
+    </form>
+</div>
+</body>
+
+</html>

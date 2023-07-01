@@ -66,6 +66,7 @@ public class EmployeeController {
         employeeUpdate.setFirstName(employee.getFirstName());
         employeeUpdate.setLastName(employee.getLastName());
         employeeUpdate.setStatus(employee.getStatus());
+        employeeRepository.save(employeeUpdate);
         ModelAndView modelAndView = getPageUsers();
         return modelAndView;
     }
