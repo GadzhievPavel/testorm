@@ -46,7 +46,6 @@ public class StatusEmployeePageController {
         ModelAndView view = new ModelAndView();
         view.setViewName("edit_status.html");
         view.addObject(statusEmployee);
-        System.out.println(statusEmployee);
         return view;
     }
     private ModelAndView getPage() {

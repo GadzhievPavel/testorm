@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Priorities</title>
+    <link rel="stylesheet" type="text/css"/>
+</head>
+<body>
+<div>
+    <form th:action="/pages/create_priority" th:object="${priority}" method="post">
+        <table>
+            <tr>
+                <td>Name</td>
+                <td><input type="text" th:field="*{name}"></td>
+            </tr>
+            <tr>
+                <td>Value</td>
+                <td><input type="number" th:field="*{value}"></td>
+            </tr>
+            <input type="submit" value="Create">
+        </table>
+    </form>
+</div>
+<div th:if="${PrioritiesIsEmpty}">
+    <p>no data priorities</p>
+</div>
+<div th:unless="${PrioritiesIsEmpty}">
+    <table>
+        <tr>
+            <td>Priorities</td>
+        </tr>
+        <tr th:each="priority : ${priorities}">
+            <td th:text="${priority.getName()}"></td>
+            <td th:text="${priority.getValue()}"></td>
+        </tr>
+    </table>
+</div>
+</body>
+</html>
