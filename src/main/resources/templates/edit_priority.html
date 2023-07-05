@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit priority</title>
+</head>
+<body>
+<div>
+    <form th:action="@{/pages/edit_priority}" th:object="${priority}" method="post">
+        <table>
+            <input type="hidden" th:field="${priority.id}"/>
+            <tr>
+                <td>
+                    <p>Name</p>
+                </td>
+                <td>
+                    <input type="text" th:field="${priority.name}"/>
+                </td>
+                <td>
+                    <p>Value</p>
+                </td>
+                <td>
+                    <input type="text" th:field="${priority.value}"/>
+                </td>
+            </tr>
+        </table>
+        <input type="submit" value="update"/>
+    </form>
+</div>
+</body>
+</html>
