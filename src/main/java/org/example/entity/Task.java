@@ -1,6 +1,7 @@
 package org.example.entity;
 
 import jakarta.persistence.*;
+import org.example.entity.client.UserClient;
 import org.springframework.stereotype.Component;
 
 import java.util.Date;
@@ -29,11 +30,15 @@ public class Task {
     @JoinColumn(name = "employee_executor_id")
     private Employee employeeExecutor;
 
+    @ManyToOne
+    @JoinColumn(name = "id_user_client")
+    private UserClient userClient;
+
     public Task() {
 
     }
 
-    public Task(long id, String theme, String textTask, Priority priority, Date dateCreate, Date dateStartProcessing, Date dateFinishProcessing, Employee employeeExecutor) {
+    public Task(long id, String theme, String textTask, Priority priority, Date dateCreate, Date dateStartProcessing, Date dateFinishProcessing, Employee employeeExecutor, UserClient userClient) {
         this.id = id;
         this.theme = theme;
         this.textTask = textTask;
@@ -42,6 +47,7 @@ public class Task {
         this.dateStartProcessing = dateStartProcessing;
         this.dateFinishProcessing = dateFinishProcessing;
         this.employeeExecutor = employeeExecutor;
+        this.userClient = userClient;
     }
 
     public long getId() {
@@ -108,6 +114,13 @@ public class Task {
         this.employeeExecutor = employeeExecutor;
     }
 
+    public UserClient getUserClient() {
+        return userClient;
+    }
+
+    public void setUserClient(UserClient userClient) {
+        this.userClient = userClient;
+    }
     @Override
     public String toString() {
         return "Task{" +
