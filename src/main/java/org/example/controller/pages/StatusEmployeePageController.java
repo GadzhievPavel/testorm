@@ -26,7 +26,6 @@ public class StatusEmployeePageController {
 
     @PostMapping(path = "/delete_status")
     public ModelAndView deleteStatus(@ModelAttribute StatusEmployee statusEmployee) {
-        System.out.println(statusEmployee);
         statusEmployeeRepository.delete(statusEmployee);
         return getPage();
     }

@@ -1,52 +1,94 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-  <meta charset="UTF-8"/>
-  <title>Companies</title>
-  <link rel="stylesheet" type="text/css"/>
+    <meta charset="UTF-8"/>
+    <title>Companies</title>
+    <link rel="stylesheet" type="text/css"/>
 </head>
 <body>
 <div>
-  <form th:action="@{/pages/create_company}" th:object="${company}" method="post">
-    <table>
-      <tr>
-        <td>
-          <p>Название компании</p>
-        </td>
-        <td>
-          <input type="text" th:field="*{name}"/>
-        </td>
-      </tr>
-      <tr>
-        <td>
-          <p>Юридический адрес</p>
-        </td>
-        <td>
-          <input type="text" th:field="*{businessAddress}">
-        </td>
-      </tr>
-      <tr>
-        <td>
-          <p>
-            Фактический адрес
-          </p>
-        </td>
-        <td>
-          <input type="text" th:field="*{factAddress}">
-        </td>
-      </tr>
-      <tr>
-        <td>
-          <p>E-mail</p>
-        </td>
-        <td>
-          <input type="text" th:field="*{email}">
-        </td>
-      </tr>
-    </table>
-    <input type="submit" value="Create">
-  </form>
+    <form th:action="@{/pages/create_company}" th:object="${company}" method="post">
+        <table>
+            <tr>
+                <td>
+                    <p>Название компании</p>
+                </td>
+                <td>
+                    <input type="text" th:field="*{name}"/>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <p>Юридический адрес</p>
+                </td>
+                <td>
+                    <input type="text" th:field="*{businessAddress}">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <p>
+                        Фактический адрес
+                    </p>
+                </td>
+                <td>
+                    <input type="text" th:field="*{factAddress}">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <p>E-mail</p>
+                </td>
+                <td>
+                    <input type="text" th:field="*{email}">
+                </td>
+            </tr>
+        </table>
+        <input type="submit" value="Create">
+    </form>
 </div>
-
+<div th:if="${CompanyIsEmpty}">
+    <p>have not companies</p>
+</div>
+<div th:unless="${CompanyIsEmpty}">
+    <table>
+        <thead>
+        <tr>
+            <td>Название</td>
+            <td>Юридический адрес</td>
+            <td>Фактический адрес</td>
+            <td>E-mail</td>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="company : ${companies}">
+            <td th:text="${company.name}"></td>
+            <td th:text="${company.businessAddress}"></td>
+            <td th:text="${company.factAddress}"></td>
+            <td th:text="${company.email}"></td>
+            <td>
+                <form th:action="@{/pages/delete_company}" th:object="${company}" method="post">
+                    <input type="hidden" name="id" th:value="${company.id}"/>
+                    <input type="hidden" name="name" th:value="${company.name}"/>
+                    <input type="hidden" name="businessAddress" th:value="${company.businessAddress}"/>
+                    <input type="hidden" name="factAddress" th:value="${company.factAddress}"/>
+                    <input type="hidden" name="email" th:value="${company.email}"/>
+                    <input type="submit" value="delete"/>
+                </form>
+            </td>
+            <td>
+                <form th:action="@{/pages/get_edit_company}" th:object="${company}" method="get">
+                    <input type="hidden" name="id" th:value="${company.id}"/>
+                    <input type="hidden" name="name" th:value="${company.name}"/>
+                    <input type="hidden" name="businessAddress" th:value="${company.businessAddress}"/>
+                    <input type="hidden" name="factAddress" th:value="${company.factAddress}"/>
+                    <input type="hidden" name="email" th:value="${company.email}"/>
+                    <input type="submit" value="update"/>
+                </form>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
 </body>
 </html>
