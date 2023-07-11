@@ -7,6 +7,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.util.ArrayList;
+
 @RestController
 @RequestMapping("/pages")
 public class PriorityPageController {
@@ -26,7 +28,8 @@ public class PriorityPageController {
     }
     private ModelAndView getPage(){
         ModelAndView view = new ModelAndView();
-        var priorities =priorityRepository.findAll();
+        ArrayList<Priority> priorities = new ArrayList<>();
+        priorityRepository.findAll().iterator().forEachRemaining(priorities::add);
         view.setViewName("priorities.html");
         view.addObject("PrioritiesIsEmpty",priorities.isEmpty());
         view.addObject("priorities",priorities);

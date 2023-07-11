@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.logging.Logger;
@@ -48,18 +49,20 @@ public class EmployeeController {
     }
 
     @GetMapping(path = "employees_editor_page")
-    public ModelAndView getEmployeesEditorPage(@ModelAttribute Employee employee){
-        List<StatusEmployee> statusEmployees = statusEmployeeRepository.findAll();
+    public ModelAndView getEmployeesEditorPage(@ModelAttribute Employee employee) {
+        ArrayList<StatusEmployee> statusEmployees = new ArrayList<>();
+        statusEmployeeRepository.findAll().iterator().forEachRemaining(statusEmployees::add);
         employee = employeeRepository.findById(employee.getId()).get();
         System.out.println(employee.toString());
         ModelAndView view = new ModelAndView();
         view.setViewName("edit_employees.html");
         view.addObject("statuses", statusEmployees);
-        view.addObject("sel",employee.getStatus());
+        view.addObject("sel", employee.getStatus());
         return view;
     }
+
     @PostMapping(path = "update_employee")
-    public ModelAndView updateEmployee(@ModelAttribute Employee employee){
+    public ModelAndView updateEmployee(@ModelAttribute Employee employee) {
         System.out.println(employee);
         Employee employeeUpdate = employeeRepository.findById(employee.getId()).get();
         employeeUpdate.setEmailId(employee.getEmailId());
@@ -73,8 +76,10 @@ public class EmployeeController {
 
     private ModelAndView getPageUsers() {
         ModelAndView view = new ModelAndView();
-        List<Employee> employees = employeeRepository.findAll();
-        List<StatusEmployee> statusEmployees = statusEmployeeRepository.findAll();
+        List<Employee> employees = new ArrayList<>();
+        employeeRepository.findAll().iterator().forEachRemaining(employees::add);
+        List<StatusEmployee> statusEmployees = new ArrayList<>();
+        statusEmployeeRepository.findAll().iterator().forEachRemaining(statusEmployees::add);
         view.addObject("employee", new Employee());
         view.setViewName("employees.html");
         view.addObject("employees", employees);
