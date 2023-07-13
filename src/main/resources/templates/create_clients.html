@@ -10,9 +10,10 @@
 <body>
 
 
-<div>
-    <form th:action="@{/pages/create_client}" th:object="${newClient}" method="post">
-        <table>
+<div style="position:absolute">
+    <h1>Создание пользователя</h1>
+    <form style="display: inline-block;" th:action="@{/pages/create_client}" th:object="${newClient}" method="post">
+        <table style="width: 100%">
             <tr>
                 <td><span>Name:</span></td>
                 <td><input type="text" th:field="*{name}" placeholder="Name"></td>
@@ -27,11 +28,11 @@
             </tr>
             <tr>
                 <td><span>E-mail:</span></td>
-                <td><input type="text" th:field="*{email}" placeholder="E-mail"></td>
+                <td><input type="email" th:field="*{email}" placeholder="E-mail"></td>
             </tr>
             <tr>
                 <td><span>Number:</span></td>
-                <td><input type="text" th:field="*{number}" placeholder="Number"></td>
+                <td><input type="number" th:field="*{number}" placeholder="Number"></td>
             </tr>
             <tr>
                 <td><span>Login:</span></td>
@@ -42,30 +43,32 @@
                 <td><input type="password" th:field="*{password}" placeholder="Password"></td>
             </tr>
         </table>
+        <fieldset>
+            <legend>Выбор компании</legend>
+            <div style="overflow-y: auto; height: 150px;">
+
+                <ul>
+                    <li th:each="company:${companies}">
+                        <div>
+                            <input type="radio" th:field="*{company}" th:value="${company.id}" name="company"/>
+                            <label th:text="${company.name}"></label>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </fieldset>
         <input type="submit" value="create">
     </form>
 
-    <fieldset>
-        <legend>Выбор компании</legend>
-        <div style="overflow-y: auto; height: 150px;">
-            <div>
-                <form action="/pages/search_company" th:object="${nameCompany}" method="get">
-                    <input type="text" th:field="*{name}"/>
-                    <input type="submit" value="find">
-                </form>
-            </div>
-            <ul th:object="${newClient.company}">
-                <li th:each="company:${companies}">
-                    <div>
-                        <input type="radio" th:value="${company.id}"
-                               name="company"/>
-                        <label th:text="${company.name}"></label>
-                    </div>
-                </li>
-            </ul>
-        </div>
-    </fieldset>
 
+    <div style="display: inline-block; position:relative; top:0%">
+        <h4>Фильтр</h4>
+        <p>Поиск компании</p>
+        <form action="/pages/search_company" th:object="${nameCompany}" method="get">
+            <input type="text" th:field="*{name}"/>
+            <input type="submit" value="find">
+        </form>
+    </div>
     <!--        <fieldset>-->
     <!--            <legend>Выбор компании</legend>-->
     <!--            <div>-->

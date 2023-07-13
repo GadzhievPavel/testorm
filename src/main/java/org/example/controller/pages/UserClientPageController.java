@@ -23,14 +23,14 @@ public class UserClientPageController {
 
     @GetMapping(path = "/clients")
     public ModelAndView getClients(){
-        return getPage();
+        return clientService.getPage();
     }
 
     @PostMapping(path="/create_client")
     public ModelAndView createClient(@ModelAttribute UserClient newClient){
         System.out.println(newClient);
         clientRepository.save(newClient);
-        return getPage();
+        return clientService.getPage();
     }
 
     @GetMapping(path="/create_client_page")
@@ -39,11 +39,5 @@ public class UserClientPageController {
         return clientService.getCreationPage(companies);
     }
 
-    private ModelAndView getPage(){
-        ModelAndView view = new ModelAndView();
-        view.setViewName("clients.html");
-//        view.addObject("client", new UserClient());
-//        view.addObject("clients",clientRepository.findAll());
-        return view;
-    }
+
 }

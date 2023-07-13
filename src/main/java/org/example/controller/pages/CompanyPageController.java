@@ -1,11 +1,13 @@
 package org.example.controller.pages;
 
 import org.example.entity.client.Company;
+import org.example.entity.client.UserClient;
 import org.example.model.NameCompany;
 import org.example.repository.CompanyRepository;
 import org.example.service.CompanyService;
 import org.example.service.UserClientService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -65,7 +67,8 @@ public class CompanyPageController {
 
 
     @GetMapping(path = "/search_company")
-    public ModelAndView findCompany(@ModelAttribute NameCompany nameCompany) {
+    public ModelAndView findCompany(@ModelAttribute NameCompany nameCompany,Model model) {
+        model.asMap().keySet().stream().forEach(System.out::println);
         System.out.println(nameCompany.getName());
         ArrayList<Company> companies = (ArrayList<Company>) companyService.getCompaniesByName(nameCompany.getName());
         return clientService.getCreationPage(companies);
