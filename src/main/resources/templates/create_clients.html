@@ -3,22 +3,87 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <script language="JavaScript">
+
+    </script>
 </head>
 <body>
 
+
 <div>
-  <form action="/pages/search_company" th:object="${nameCompany}" method="get">
-      <input type="text" th:field="*{name}"/>
-      <input type="submit" value="find">
-  </form>
-</div>
-<div>
-    <table>
-        <tr th:each="company:${companies}">
-            <td th:text="${company.name}"></td>
-            <td th:text="${company.email}"></td>
-        </tr>
-    </table>
+    <form th:action="@{/pages/create_client}" th:object="${newClient}" method="post">
+        <table>
+            <tr>
+                <td><span>Name:</span></td>
+                <td><input type="text" th:field="*{name}" placeholder="Name"></td>
+            </tr>
+            <tr>
+                <td><span>Lastname:</span></td>
+                <td><input type="text" th:field="*{lastname}" placeholder="Lastname"></td>
+            </tr>
+            <tr>
+                <td><span>Patronymic:</span></td>
+                <td><input type="text" th:field="*{patronymic}" placeholder="Patronymic"></td>
+            </tr>
+            <tr>
+                <td><span>E-mail:</span></td>
+                <td><input type="text" th:field="*{email}" placeholder="E-mail"></td>
+            </tr>
+            <tr>
+                <td><span>Number:</span></td>
+                <td><input type="text" th:field="*{number}" placeholder="Number"></td>
+            </tr>
+            <tr>
+                <td><span>Login:</span></td>
+                <td><input type="text" th:field="*{login}" placeholder="Login"></td>
+            </tr>
+            <tr>
+                <td><span>Password:</span></td>
+                <td><input type="password" th:field="*{password}" placeholder="Password"></td>
+            </tr>
+        </table>
+        <input type="submit" value="create">
+    </form>
+
+    <fieldset>
+        <legend>Выбор компании</legend>
+        <div style="overflow-y: auto; height: 150px;">
+            <div>
+                <form action="/pages/search_company" th:object="${nameCompany}" method="get">
+                    <input type="text" th:field="*{name}"/>
+                    <input type="submit" value="find">
+                </form>
+            </div>
+            <ul th:object="${newClient.company}">
+                <li th:each="company:${companies}">
+                    <div>
+                        <input type="radio" th:value="${company.id}"
+                               name="company"/>
+                        <label th:text="${company.name}"></label>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </fieldset>
+
+    <!--        <fieldset>-->
+    <!--            <legend>Выбор компании</legend>-->
+    <!--            <div>-->
+    <!--                <form action="/pages/search_company" th:object="${nameCompany}" method="get">-->
+    <!--                    <input type="text" th:field="*{name}"/>-->
+    <!--                    <input type="submit" value="find">-->
+    <!--                </form>-->
+    <!--            </div>-->
+    <!--            <ul>-->
+    <!--                <li th:each="company:${companies}">-->
+    <!--                    <div>-->
+    <!--                        <input type="radio" th:field="${newClient.company}" th:value="${company.id}" name="company"/>-->
+    <!--                        <label th:text="${company.name}"></label>-->
+    <!--                    </div>-->
+    <!--                </li>-->
+    <!--            </ul>-->
+    <!--        </fieldset>-->
+    <!--    </form>-->
 </div>
 </body>
 </html>

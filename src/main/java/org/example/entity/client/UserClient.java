@@ -113,4 +113,19 @@ public class UserClient {
     public void setCompany(Company company) {
         this.company = company;
     }
+
+    @Override
+    public String toString() {
+        return "UserClient{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", lastname='" + lastname + '\'' +
+                ", patronymic='" + patronymic + '\'' +
+                ", email='" + email + '\'' +
+                ", number='" + number + '\'' +
+                ", login='" + login + '\'' +
+                ", password='" + password + '\'' +
+                ", company=" + company +
+                '}';
+    }
 }

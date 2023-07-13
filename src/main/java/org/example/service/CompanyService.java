@@ -1,9 +1,11 @@
 package org.example.service;
 
 import org.example.entity.client.Company;
+import org.example.model.NameCompany;
 import org.example.repository.CompanyRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.servlet.ModelAndView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -48,4 +50,5 @@ public class CompanyService {
         companyUpdating.setEmail(company.getEmail());
         companyRepository.save(companyUpdating);
     }
+
 }
