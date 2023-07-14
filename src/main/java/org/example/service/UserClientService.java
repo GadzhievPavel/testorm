@@ -1,5 +1,6 @@
 package org.example.service;
 
+import org.example.dto.CreateNewUserDTO;
 import org.example.entity.client.Company;
 import org.example.entity.client.UserClient;
 import org.example.model.NameCompany;
@@ -29,6 +30,23 @@ public class UserClientService {
         modelAndView.addObject("newClient", new UserClient());
         return modelAndView;
     }
+    public ModelAndView getCreationPage1(){
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("create_clients.html");
+        CreateNewUserDTO createNewUserDTO = new CreateNewUserDTO();
+        createNewUserDTO.setUserClient(new UserClient());
+        createNewUserDTO.setCompanies((ArrayList<Company>) companyService.findAll());
+        createNewUserDTO.setNameCompany(new NameCompany());
+        modelAndView.addObject("newUserDTO", createNewUserDTO);
+        return modelAndView;
+    }
+
+    public ModelAndView getCreationPage1(CreateNewUserDTO createNewUserDTO){
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("create_clients.html");
+        modelAndView.addObject("newUserDTO", createNewUserDTO);
+        return modelAndView;
+    }
 
     public ModelAndView getPage(){
         ModelAndView view = new ModelAndView();
@@ -36,5 +54,11 @@ public class UserClientService {
         ArrayList<UserClient> userClients = (ArrayList<UserClient>) clientRepository.findAll();
         view.addObject("clients",userClients);
         return view;
+    }
+
+    public CreateNewUserDTO getCreateNewUserDTO(CreateNewUserDTO createNewUserDTO){
+        ArrayList<Company> companies = (ArrayList<Company>) companyService.getCompaniesByName(createNewUserDTO.getNameCompany().getName());
+        createNewUserDTO.setCompanies(companies);
+        return createNewUserDTO;
     }
 }

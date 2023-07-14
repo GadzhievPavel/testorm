@@ -68,7 +68,6 @@ public class CompanyPageController {
 
     @GetMapping(path = "/search_company")
     public ModelAndView findCompany(@ModelAttribute NameCompany nameCompany,Model model) {
-        model.asMap().keySet().stream().forEach(System.out::println);
         System.out.println(nameCompany.getName());
         ArrayList<Company> companies = (ArrayList<Company>) companyService.getCompaniesByName(nameCompany.getName());
         return clientService.getCreationPage(companies);
